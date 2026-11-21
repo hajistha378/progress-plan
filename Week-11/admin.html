@@ -1,0 +1,478 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Admin Dashboard — Coco Lane Cafe</title>
+  <meta name="description" content="Demo admin dashboard for Coco Lane Cafe. Manage products, local orders, contact messages and settings. Frontend only — data stays in this browser.">
+  <meta name="theme-color" content="#f8f1e6">
+  <meta name="robots" content="noindex, nofollow">
+  <link rel="icon" type="image/svg+xml" href="favicon.svg">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500;1,600&family=Manrope:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/theme.css">
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="css/responsive.css">
+  <script>
+    (function () {
+      try {
+        var saved = localStorage.getItem('cocoLaneTheme');
+        if (saved !== 'light' && saved !== 'dark') {
+          saved = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+        }
+        document.documentElement.setAttribute('data-theme', saved);
+        document.documentElement.classList.add('js');
+      } catch (error) {
+        document.documentElement.classList.add('js');
+      }
+    })();
+  </script>
+</head>
+<body data-page="admin" class="admin-page">
+  <a class="skip-link" href="#adminMain">Skip to dashboard</a>
+
+  <header class="admin-bar">
+    <div class="container admin-bar__inner">
+      <a class="brand" href="index.html" aria-label="Coco Lane Cafe — back to website">
+        <span class="brand-mark" aria-hidden="true">
+          <svg viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M6.5 11.5h15v8a7.5 7.5 0 0 1-7.5 7.5 7.5 7.5 0 0 1-7.5-7.5v-8Z"/>
+            <path d="M21.5 13.8h2.7a3.6 3.6 0 0 1 0 7.2h-2.7"/>
+            <path d="M10 8c0-1.6 1.2-1.9 1.2-3.4M14.7 8c0-1.6 1.2-1.9 1.2-3.4M19.4 8c0-1.6 1.2-1.9 1.2-3.4"/>
+          </svg>
+        </span>
+        <span class="brand-text">
+          <strong>COCO LANE</strong>
+          <span>Café · Est. 2026</span>
+        </span>
+      </a>
+
+      <span class="badge badge--soft admin-badge">Demo admin</span>
+
+      <div class="admin-bar__right">
+        <button class="icon-btn theme-toggle" type="button" aria-label="Switch to dark theme" aria-pressed="false" title="Switch theme">
+          <svg class="icon-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" aria-hidden="true">
+            <circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"/>
+          </svg>
+          <svg class="icon-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <path d="M20.5 14.3A8.5 8.5 0 0 1 9.7 3.5a8.5 8.5 0 1 0 10.8 10.8Z"/>
+          </svg>
+        </button>
+        <a class="btn btn--sm btn--ghost" href="index.html">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 11 12 4l9 7M5 10v10h14V10"/></svg>
+          <span>View site</span>
+        </a>
+        <button class="btn btn--sm btn--outline" type="button" id="adminLogoutBtn" hidden>Sign out</button>
+      </div>
+    </div>
+  </header>
+
+  <main id="adminMain">
+    <section class="admin-login" id="adminLogin">
+      <div class="admin-login__card">
+        <span class="admin-login__icon" aria-hidden="true">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round">
+            <rect x="4" y="10" width="16" height="11" rx="2.4"/>
+            <path d="M8 10V7a4 4 0 0 1 8 0v3"/>
+            <path d="M12 14v3"/>
+          </svg>
+        </span>
+        <span class="eyebrow">Demo dashboard</span>
+        <h1>Welcome to the back counter.</h1>
+        <p>Sign in to manage the demo menu, look at locally saved orders and read contact messages. No server is involved.</p>
+
+        <div id="adminLoginAlert" aria-live="polite"></div>
+
+        <form class="admin-login__form" id="adminLoginForm" novalidate>
+          <div class="field">
+            <label class="field-label" for="adminEmail">Admin email</label>
+            <input class="input" type="email" id="adminEmail" value="admin@cocolanecafe.example" autocomplete="username" placeholder="admin@cocolanecafe.example" required>
+            <span class="field-error" role="alert"></span>
+          </div>
+          <div class="field">
+            <label class="field-label" for="adminPassword">Password</label>
+            <input class="input" type="password" id="adminPassword" autocomplete="current-password" placeholder="coco1234" required>
+            <span class="field-error" role="alert"></span>
+          </div>
+          <button class="btn btn--lg btn--block" type="submit" id="adminLoginSubmit">Sign in to dashboard</button>
+        </form>
+
+        <div class="form-alert form-alert--info mt-3">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M12 11v6M12 7h.01"/></svg>
+          <span><strong>Demo credentials</strong><br>Email: admin@cocolanecafe.example<br>Password: coco1234<br><br>This is a frontend-only demo gate. It is <strong>not secure</strong> and everything is stored in this browser.</span>
+        </div>
+
+        <button class="btn btn--sm btn--ghost btn--block mt-2" type="button" id="fillDemoBtn">Fill demo credentials</button>
+
+        <p class="admin-footer-note">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3 4 6v6c0 5 3.4 8.4 8 9 4.6-.6 8-4 8-9V6l-8-3Z"/><path d="m9 12 2 2 4-4"/></svg>
+          Local demo only · nothing is sent to a real cafe
+        </p>
+      </div>
+    </section>
+
+    <div id="adminApp" hidden>
+      <div class="container admin-shell">
+        <aside class="admin-sidebar">
+          <div class="admin-sidebar__head">
+            <strong>Coco Lane admin</strong>
+            <span>Local demo workspace</span>
+          </div>
+
+          <nav class="dash-nav" aria-label="Admin dashboard sections">
+            <button type="button" data-admin-view="dashboard" class="is-active" aria-current="page">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="3" width="7" height="9" rx="1.5"/><rect x="14" y="3" width="7" height="5" rx="1.5"/><rect x="14" y="12" width="7" height="9" rx="1.5"/><rect x="3" y="16" width="7" height="5" rx="1.5"/></svg>
+              Dashboard
+            </button>
+            <button type="button" data-admin-view="products">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 8h12v6a5 5 0 0 1-5 5H9a5 5 0 0 1-5-5V8Z"/><path d="M16 9h2.5a2.5 2.5 0 0 1 0 5H16M7 3v2M11 3v2M15 3v2"/></svg>
+              Menu products
+            </button>
+            <button type="button" data-admin-view="orders">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 4h2l2.4 11.2a1.6 1.6 0 0 0 1.6 1.3h8.6a1.6 1.6 0 0 0 1.55-1.2L21 8H6"/><circle cx="9.5" cy="20" r="1.2"/><circle cx="18" cy="20" r="1.2"/></svg>
+              Orders
+              <span class="dash-nav__count" id="navOrderCount" hidden>0</span>
+            </button>
+            <button type="button" data-admin-view="messages">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="m3 7 9 6 9-6"/></svg>
+              Messages
+              <span class="dash-nav__count" id="navMessageCount" hidden>0</span>
+            </button>
+            <button type="button" data-admin-view="settings">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" aria-hidden="true"><path d="M4 7h10M18 7h2M4 17h2M10 17h10"/><circle cx="16" cy="7" r="2"/><circle cx="8" cy="17" r="2"/></svg>
+              Settings
+            </button>
+          </nav>
+
+          <p class="admin-sidebar__note">
+            <strong>LocalStorage only.</strong> Orders, products, messages and this sign-in are stored in this browser. Clearing browser data will erase everything. This is a demonstration, not a live cafe system.
+          </p>
+        </aside>
+
+        <div class="admin-main">
+          <section class="admin-view" data-admin-panel="dashboard">
+            <div class="admin-view__head">
+              <div>
+                <span class="eyebrow">Overview</span>
+                <h1>Good <span id="adminGreeting">morning</span>, admin.</h1>
+                <p id="adminDate">Today</p>
+              </div>
+              <div class="admin-view__actions">
+                <button class="btn btn--sm" type="button" data-open-product>Add a product</button>
+                <a class="btn btn--sm btn--outline" href="menu.html">Preview menu</a>
+              </div>
+            </div>
+
+            <div class="admin-grid">
+              <article class="stat-card">
+                <span class="stat-card__icon" aria-hidden="true">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M3 4h2l2.4 11.2a1.6 1.6 0 0 0 1.6 1.3h8.6a1.6 1.6 0 0 0 1.55-1.2L21 8H6"/><circle cx="9.5" cy="20" r="1.2"/><circle cx="18" cy="20" r="1.2"/></svg>
+                </span>
+                <small>Total orders</small>
+                <strong id="statOrders">0</strong>
+                <span class="stat-card__meta" id="statOrdersMeta">No orders yet</span>
+              </article>
+
+              <article class="stat-card">
+                <span class="stat-card__icon" aria-hidden="true">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="6" width="20" height="12" rx="2"/><circle cx="12" cy="12" r="3"/><path d="M6 12h.01M18 12h.01"/></svg>
+                </span>
+                <small>Order value</small>
+                <strong id="statRevenue">LKR 0</strong>
+                <span class="stat-card__meta" id="statRevenueMeta">No orders yet</span>
+              </article>
+
+              <article class="stat-card">
+                <span class="stat-card__icon" aria-hidden="true">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg>
+                </span>
+                <small>Open orders</small>
+                <strong id="statPending">0</strong>
+                <span class="stat-card__meta" id="statPendingMeta">Nothing waiting</span>
+              </article>
+
+              <article class="stat-card">
+                <span class="stat-card__icon" aria-hidden="true">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="m3 7 9 6 9-6"/></svg>
+                </span>
+                <small>Unread messages</small>
+                <strong id="statMessages">0</strong>
+                <span class="stat-card__meta" id="statMessagesMeta">No messages yet</span>
+              </article>
+            </div>
+
+            <div class="admin-two-col">
+              <div class="admin-card">
+                <div class="admin-card__head">
+                  <div>
+                    <h2>Orders this week</h2>
+                    <span>Locally saved orders by day</span>
+                  </div>
+                </div>
+                <div class="admin-card__body">
+                  <div class="chart-bars" id="salesChart" aria-label="Order value for the last seven days"></div>
+                </div>
+              </div>
+
+              <div class="admin-card">
+                <div class="admin-card__head">
+                  <div>
+                    <h2>Popular right now</h2>
+                    <span>Based on local demo orders</span>
+                  </div>
+                </div>
+                <div class="admin-card__body">
+                  <div class="popular-list" id="popularList"></div>
+                </div>
+              </div>
+            </div>
+
+            <div class="admin-card">
+              <div class="admin-card__head">
+                <div>
+                  <h2>Recent orders</h2>
+                  <span>The latest five orders saved in this browser</span>
+                </div>
+                <button class="btn btn--sm btn--ghost" type="button" data-admin-view="orders">All orders</button>
+              </div>
+              <div class="table-wrap">
+                <table class="data-table">
+                  <thead>
+                    <tr>
+                      <th scope="col">Order</th>
+                      <th scope="col">Customer</th>
+                      <th scope="col">Placed</th>
+                      <th scope="col">Total</th>
+                      <th scope="col">Status</th>
+                      <th scope="col">View</th>
+                    </tr>
+                  </thead>
+                  <tbody id="recentOrdersBody"></tbody>
+                </table>
+              </div>
+            </div>
+          </section>
+
+          <section class="admin-view" data-admin-panel="products" hidden>
+            <div class="admin-view__head">
+              <div>
+                <span class="eyebrow">Menu</span>
+                <h1>Products &amp; prices.</h1>
+                <p>Add, edit or remove menu items. Changes save to this browser immediately.</p>
+              </div>
+              <div class="admin-view__actions">
+                <button class="btn btn--sm" type="button" data-open-product>Add product</button>
+              </div>
+            </div>
+
+            <div class="admin-card">
+              <div class="admin-card__head">
+                <div>
+                  <h2>Menu catalogue</h2>
+                  <span id="productCountLabel">0 products</span>
+                </div>
+              </div>
+              <div class="admin-card__body">
+                <div class="admin-toolbar">
+                  <div class="search-field">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg>
+                    <label class="sr-only" for="adminProductSearch">Search products</label>
+                    <input class="input" type="search" id="adminProductSearch" placeholder="Search by name or ID…" autocomplete="off">
+                  </div>
+                  <div class="select-wrap">
+                    <label class="sr-only" for="adminProductCategoryFilter">Filter products by category</label>
+                    <select class="input select" id="adminProductCategoryFilter"></select>
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" aria-hidden="true"><path d="m6 9 6 6 6-6"/></svg>
+                  </div>
+                </div>
+                <div class="table-wrap">
+                  <table class="data-table">
+                    <thead>
+                      <tr>
+                        <th scope="col">Product</th>
+                        <th scope="col">Category</th>
+                        <th scope="col">Price</th>
+                        <th scope="col">Featured</th>
+                        <th scope="col">Actions</th>
+                      </tr>
+                    </thead>
+                    <tbody id="productsBody"></tbody>
+                  </table>
+                </div>
+              </div>
+            </div>
+          </section>
+
+          <section class="admin-view" data-admin-panel="orders" hidden>
+            <div class="admin-view__head">
+              <div>
+                <span class="eyebrow">Orders</span>
+                <h1>Every local order.</h1>
+                <p>Update the status, read the details or export a JSON copy. Orders are saved by the checkout page in this browser.</p>
+              </div>
+              <div class="admin-view__actions">
+                <button class="btn btn--sm btn--outline" type="button" id="exportOrdersBtn">Export orders</button>
+              </div>
+            </div>
+
+            <div class="admin-card">
+              <div class="admin-card__head">
+                <div>
+                  <h2>Order board</h2>
+                  <span id="orderCountLabel">0 orders</span>
+                </div>
+              </div>
+              <div class="admin-card__body">
+                <div class="admin-toolbar">
+                  <div class="search-field">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg>
+                    <label class="sr-only" for="adminOrderSearch">Search orders</label>
+                    <input class="input" type="search" id="adminOrderSearch" placeholder="Search order, name or phone…" autocomplete="off">
+                  </div>
+                  <div class="select-wrap">
+                    <label class="sr-only" for="adminOrderStatusFilter">Filter by status</label>
+                    <select class="input select" id="adminOrderStatusFilter">
+                      <option value="all">All statuses</option>
+                      <option value="Pending">Pending</option>
+                      <option value="Confirmed">Confirmed</option>
+                      <option value="Preparing">Preparing</option>
+                      <option value="Completed">Completed</option>
+                      <option value="Cancelled">Cancelled</option>
+                    </select>
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" aria-hidden="true"><path d="m6 9 6 6 6-6"/></svg>
+                  </div>
+                </div>
+                <div class="table-wrap">
+                  <table class="data-table">
+                    <thead>
+                      <tr>
+                        <th scope="col">Order</th>
+                        <th scope="col">Customer</th>
+                        <th scope="col">Placed</th>
+                        <th scope="col">Total</th>
+                        <th scope="col">Status</th>
+                        <th scope="col">Actions</th>
+                      </tr>
+                    </thead>
+                    <tbody id="ordersBody"></tbody>
+                  </table>
+                </div>
+              </div>
+            </div>
+          </section>
+
+          <section class="admin-view" data-admin-panel="messages" hidden>
+            <div class="admin-view__head">
+              <div>
+                <span class="eyebrow">Inbox</span>
+                <h1>Notes from the counter.</h1>
+                <p>Messages submitted through the contact form. They stay in this browser and are never emailed automatically.</p>
+              </div>
+              <div class="admin-view__actions">
+                <button class="btn btn--sm btn--outline" type="button" id="markAllReadBtn">Mark all as read</button>
+              </div>
+            </div>
+
+            <div class="admin-card">
+              <div class="admin-card__head">
+                <div>
+                  <h2>Contact messages</h2>
+                  <span id="messageCountLabel">0 messages</span>
+                </div>
+              </div>
+              <div class="admin-card__body">
+                <div class="admin-toolbar">
+                  <div class="select-wrap">
+                    <label class="sr-only" for="adminMessageFilter">Filter messages</label>
+                    <select class="input select" id="adminMessageFilter">
+                      <option value="all">All messages</option>
+                      <option value="unread">Unread only</option>
+                      <option value="read">Read only</option>
+                    </select>
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" aria-hidden="true"><path d="m6 9 6 6 6-6"/></svg>
+                  </div>
+                </div>
+                <div class="admin-messages" id="messagesList"></div>
+              </div>
+            </div>
+          </section>
+
+          <section class="admin-view" data-admin-panel="settings" hidden>
+            <div class="admin-view__head">
+              <div>
+                <span class="eyebrow">Settings</span>
+                <h1>The practical bits.</h1>
+                <p>Update the demo WhatsApp number and manage the data saved in this browser.</p>
+              </div>
+            </div>
+
+            <div class="settings-grid">
+              <div class="admin-card">
+                <div class="admin-card__head">
+                  <div>
+                    <h2>Cafe settings</h2>
+                    <span>Used by new checkout messages</span>
+                  </div>
+                </div>
+                <div class="admin-card__body">
+                  <div id="settingsAlert" aria-live="polite"></div>
+                  <form class="settings-form" id="adminSettingsForm" novalidate>
+                    <div class="field">
+                      <label class="field-label" for="adminWhatsApp">WhatsApp order number</label>
+                      <input class="input" type="tel" id="adminWhatsApp" inputmode="numeric" placeholder="94771234567" autocomplete="off">
+                      <span class="field-error" role="alert"></span>
+                    </div>
+                    <div class="settings-note" id="settingsNumberState">
+                      Currently using the built-in placeholder number.
+                    </div>
+                    <div class="field">
+                      <label class="field-label" for="adminCafeName">Cafe name</label>
+                      <input class="input" type="text" id="adminCafeName" placeholder="Coco Lane Cafe" autocomplete="organization">
+                      <span class="field-error" role="alert"></span>
+                    </div>
+                    <button class="btn" type="submit">Save settings</button>
+                  </form>
+                </div>
+              </div>
+
+              <div class="admin-card">
+                <div class="admin-card__head">
+                  <div>
+                    <h2>Demo data tools</h2>
+                    <span>LocalStorage only</span>
+                  </div>
+                </div>
+                <div class="admin-card__body">
+                  <div class="stack-sm">
+                    <button class="btn btn--outline btn--block" type="button" data-admin-action="export">Export all demo data (JSON)</button>
+                    <button class="btn btn--ghost btn--block" type="button" data-admin-action="reseed">Restore the sample menu</button>
+                    <button class="btn btn--ghost btn--block" type="button" data-admin-action="clear-orders">Clear all local orders</button>
+                    <button class="btn btn--ghost btn--block" type="button" data-admin-action="clear-messages">Clear all contact messages</button>
+                    <button class="btn btn--danger btn--block" type="button" data-admin-action="reset-all">Reset all demo data</button>
+                  </div>
+                  <p class="settings-note mt-3">
+                    These actions only affect this browser. They cannot touch a real cafe system, because there is no server or database in this project.
+                  </p>
+                </div>
+              </div>
+            </div>
+
+            <p class="admin-footer-note">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3 4 6v6c0 5 3.4 8.4 8 9 4.6-.6 8-4 8-9V6l-8-3Z"/><path d="m9 12 2 2 4-4"/></svg>
+              Coco Lane Cafe demo admin · frontend only · data stays in this browser
+            </p>
+          </section>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <div class="toast-stack" role="status" aria-live="polite"></div>
+
+  <script src="js/data.js" defer></script>
+  <script src="js/theme.js" defer></script>
+  <script src="js/main.js" defer></script>
+  <script src="js/admin.js" defer></script>
+</body>
+</html>

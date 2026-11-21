@@ -1,0 +1,60 @@
+<!doctype html>
+<html lang="en" data-theme="light">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Coco Lane Cafe — 11 Week Progress</title>
+  <meta name="description" content="Progress report for the Coco Lane Cafe frontend project, shown across 11 weeks.">
+  <link rel="icon" href="favicon.svg">
+  <link rel="stylesheet" href="css/theme.css">
+  <link rel="stylesheet" href="css/progress.css">
+  <script>
+    (function () {
+      try {
+        var saved = localStorage.getItem('cocoLaneTheme');
+        if (saved === 'dark' || saved === 'light') document.documentElement.setAttribute('data-theme', saved);
+      } catch (error) {}
+    })();
+  </script>
+  <script src="js/theme.js" defer></script>
+</head>
+<body>
+  <header class="progress-top">
+    <a class="progress-brand" href="index.html">Coco Lane Cafe · Progress</a>
+    <button class="theme-toggle" type="button" aria-label="Switch to dark theme" aria-pressed="false" title="Switch theme">◐</button>
+  </header>
+
+  <main class="progress-main">
+    <section class="progress-hero">
+      <span class="progress-eyebrow">11-Week Frontend Project</span>
+      <h1>Welcome to the progress report.</h1>
+      <p>This folder tracks how the Coco Lane Cafe website was built over 11 weeks. Each week has its own folder with a welcome page and the original project files from that stage. The raw website was not changed.</p>
+      <a class="progress-btn" href="Week-01/welcome.html">Start at Week 01</a>
+      <a class="progress-btn progress-btn--ghost" href="https://zainab0511.github.io/coco-lane-cafe/" target="_blank" rel="noopener noreferrer">Open finished website</a>
+    </section>
+
+    <section class="progress-section">
+      <h2>Week menu</h2>
+      <p>Choose a week to see what was built at that stage.</p>
+      <div class="progress-grid">
+        <a class="progress-card" href="Week-01/welcome.html"><span class="progress-card__num">Week 01</span><strong>Welcome page</strong><span>Project setup and the first welcome screen.</span></a>
+<a class="progress-card" href="Week-02/welcome.html"><span class="progress-card__num">Week 02</span><strong>Home page</strong><span>Hero section, featured items and cafe introduction.</span></a>
+<a class="progress-card" href="Week-03/welcome.html"><span class="progress-card__num">Week 03</span><strong>Menu page</strong><span>Full menu with categories, search and filtering.</span></a>
+<a class="progress-card" href="Week-04/welcome.html"><span class="progress-card__num">Week 04</span><strong>Product details</strong><span>Individual product pages with details and allergens.</span></a>
+<a class="progress-card" href="Week-05/welcome.html"><span class="progress-card__num">Week 05</span><strong>Cart system</strong><span>Add, remove and update quantities with LocalStorage.</span></a>
+<a class="progress-card" href="Week-06/welcome.html"><span class="progress-card__num">Week 06</span><strong>Login & register</strong><span>Customer accounts, sign in and registration.</span></a>
+<a class="progress-card" href="Week-07/welcome.html"><span class="progress-card__num">Week 07</span><strong>Checkout & WhatsApp</strong><span>Delivery details, order summary and WhatsApp hand-off.</span></a>
+<a class="progress-card" href="Week-08/welcome.html"><span class="progress-card__num">Week 08</span><strong>Orders & profile</strong><span>Order history and editable customer profile.</span></a>
+<a class="progress-card" href="Week-09/welcome.html"><span class="progress-card__num">Week 09</span><strong>Contact page</strong><span>Contact form, opening hours, map and WhatsApp link.</span></a>
+<a class="progress-card" href="Week-10/welcome.html"><span class="progress-card__num">Week 10</span><strong>About page</strong><span>Cafe story, values and gallery.</span></a>
+<a class="progress-card" href="Week-11/welcome.html"><span class="progress-card__num">Week 11</span><strong>Complete website</strong><span>Full 11-page website including the admin dashboard.</span></a>
+      </div>
+      <div class="progress-note">
+        <strong>No PHP, MySQL, XAMPP or database is used.</strong> All data is saved with browser LocalStorage, and orders are sent through WhatsApp.
+      </div>
+    </section>
+  </main>
+
+  <footer class="progress-footer">Coco Lane Cafe · 11-week progress report · Original raw site: D:\Coco-Lane-Cafe</footer>
+</body>
+</html>

@@ -1,0 +1,187 @@
+/* ============================================================
+   COCO LANE CAFE — Theme tokens (light & dark)
+   ============================================================ */
+
+:root {
+  color-scheme: light;
+
+  --font-display: "Cormorant Garamond", "Playfair Display", Georgia, "Times New Roman", serif;
+  --font-body: "Manrope", "Segoe UI", system-ui, -apple-system, sans-serif;
+
+  --bg: #f8f1e6;
+  --bg-soft: #f1e5d3;
+  --bg-deep: #e9dac5;
+  --surface: #fffaf3;
+  --surface-2: #f6ebdb;
+  --surface-3: #efe0cb;
+  --text: #2d1a10;
+  --text-soft: #695445;
+  --muted: #8a7463;
+
+  --primary: #3c2316;
+  --primary-soft: #5a3824;
+  --accent: #ad7440;
+  --accent-strong: #8d5a2c;
+  --gold: #c49a52;
+  --gold-soft: #e3c890;
+
+  --btn-bg: #3c2316;
+  --btn-bg-hover: #553321;
+  --btn-text: #fff8ee;
+  --btn-ghost-text: #3c2316;
+
+  --border: rgba(60, 35, 22, 0.13);
+  --border-strong: rgba(60, 35, 22, 0.24);
+  --overlay: rgba(28, 15, 9, 0.55);
+  --header-bg: rgba(248, 241, 230, 0.86);
+  --header-bg-solid: #f8f1e6;
+
+  --success: #3f7a56;
+  --success-bg: #e5f1e8;
+  --danger: #a83b32;
+  --danger-bg: #f8e6e3;
+  --warning: #96661f;
+  --warning-bg: #f8edd6;
+
+  --shadow-xs: 0 1px 2px rgba(45, 26, 16, 0.05);
+  --shadow-sm: 0 6px 18px rgba(45, 26, 16, 0.07);
+  --shadow-md: 0 16px 40px rgba(45, 26, 16, 0.1);
+  --shadow-lg: 0 30px 70px rgba(45, 26, 16, 0.16);
+  --shadow-glow: 0 12px 30px rgba(173, 116, 64, 0.28);
+
+  --radius-xs: 8px;
+  --radius-sm: 12px;
+  --radius-md: 18px;
+  --radius-lg: 26px;
+  --radius-xl: 36px;
+  --radius-pill: 999px;
+
+  --container: 1240px;
+  --header-h: 82px;
+
+  --ease: cubic-bezier(0.22, 1, 0.36, 1);
+  --ease-soft: cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+[data-theme="dark"] {
+  color-scheme: dark;
+
+  --bg: #100c09;
+  --bg-soft: #17110d;
+  --bg-deep: #1d1611;
+  --surface: #1c1410;
+  --surface-2: #241a14;
+  --surface-3: #2d2119;
+  --text: #f7ecdd;
+  --text-soft: #cbb9a5;
+  --muted: #a48d78;
+
+  --primary: #f0dfc8;
+  --primary-soft: #d8c0a2;
+  --accent: #d6a76e;
+  --accent-strong: #e7bd86;
+  --gold: #d8b26a;
+  --gold-soft: #8a6a38;
+
+  --btn-bg: #d8b26a;
+  --btn-bg-hover: #e7c684;
+  --btn-text: #221509;
+  --btn-ghost-text: #f0dfc8;
+
+  --border: rgba(247, 236, 221, 0.12);
+  --border-strong: rgba(247, 236, 221, 0.24);
+  --overlay: rgba(5, 3, 2, 0.68);
+  --header-bg: rgba(16, 12, 9, 0.84);
+  --header-bg-solid: #100c09;
+
+  --success: #86c39b;
+  --success-bg: rgba(67, 122, 84, 0.2);
+  --danger: #e28d83;
+  --danger-bg: rgba(168, 59, 50, 0.2);
+  --warning: #e0b670;
+  --warning-bg: rgba(150, 102, 31, 0.22);
+
+  --shadow-xs: 0 1px 2px rgba(0, 0, 0, 0.3);
+  --shadow-sm: 0 6px 18px rgba(0, 0, 0, 0.28);
+  --shadow-md: 0 16px 40px rgba(0, 0, 0, 0.36);
+  --shadow-lg: 0 30px 70px rgba(0, 0, 0, 0.48);
+  --shadow-glow: 0 12px 30px rgba(216, 178, 106, 0.18);
+}
+
+/* Soft theme cross-fade without animating every property */
+body,
+.site-header,
+.site-footer,
+.product-card,
+.cart-panel,
+.summary-card,
+.form-card,
+.admin-card,
+.testimonial-card,
+.category-card,
+.stat-card,
+.modal-card,
+.drawer,
+.info-card,
+.order-card,
+.empty-state,
+input,
+select,
+textarea,
+.btn,
+.icon-btn,
+.filter-pill,
+.dash-nav a {
+  transition:
+    background-color 0.35s var(--ease-soft),
+    border-color 0.35s var(--ease-soft),
+    color 0.35s var(--ease-soft),
+    box-shadow 0.35s var(--ease-soft);
+}
+
+/* Theme switch control */
+.theme-toggle {
+  position: relative;
+  overflow: hidden;
+}
+
+.theme-toggle .icon-sun,
+.theme-toggle .icon-moon {
+  position: absolute;
+  inset: 50% auto auto 50%;
+  transform: translate(-50%, -50%) rotate(0deg) scale(1);
+  transition:
+    transform 0.5s var(--ease),
+    opacity 0.3s var(--ease-soft);
+}
+
+.theme-toggle .icon-sun {
+  opacity: 0;
+  transform: translate(-50%, -50%) rotate(90deg) scale(0.4);
+}
+
+[data-theme="dark"] .theme-toggle .icon-sun {
+  opacity: 1;
+  transform: translate(-50%, -50%) rotate(0deg) scale(1);
+}
+
+[data-theme="dark"] .theme-toggle .icon-moon {
+  opacity: 0;
+  transform: translate(-50%, -50%) rotate(-90deg) scale(0.4);
+}
+
+.theme-toggle:hover {
+  border-color: var(--border-strong);
+  background: var(--surface-2);
+}
+
+.theme-toggle:active {
+  transform: scale(0.94);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .theme-toggle .icon-sun,
+  .theme-toggle .icon-moon {
+    transition: none;
+  }
+}
